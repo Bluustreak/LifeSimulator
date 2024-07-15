@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from  entities.creature import Creature
 
 class Game:
     def __init__(self):
@@ -14,9 +15,12 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def update(self, creatures, foods):
+    def update(self, creatures:list, foods):
         for creature in creatures:
-            creature.update()
+            creature.update(foods)
+            if creature.eaten_foods >2:
+                creatures.append(Creature(creature.x, creature.y))
+                creature.eaten_foods = 0
         for food in foods:
             food.update()
 
